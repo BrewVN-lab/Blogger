@@ -4,7 +4,7 @@ function copyFunction() { document.getElementById("getlink").style.display = "in
 
 function shortCodeIfy(e, t, a) { for (var o = e.split("$"), r = /[^{\}]+(?=})/g, i = 0; i < o.length; i++) { var s = o[i].split("="); if (s[0].trim() == t) return null != (a = s[1]).match(r) && String(a.match(r)).trim() } return !1 }
 
-function msgError() { return '<span class="error-msg"><b>Opps:</b>&nbsp;Không tìm thấy kết quả</span>' }
+function msgError() { return '<span class="error-msg"><b>Opps!</b>&nbsp;Không tìm thấy kết quả nào.</span>' }
 
 function beforeLoader() { return '<div class="loader"></div>' }
 
