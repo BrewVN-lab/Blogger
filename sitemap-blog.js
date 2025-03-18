@@ -168,7 +168,7 @@ function displayToc(filter) {
    var tocTool1 = 'Nhấp để sắp xếp theo tiêu đề';
    var tocHead2 = 'THỜI GIAN';
    var tocTool2 = 'Nhấp để sắp xếp theo ngày';
-   var tocHead3 = 'NHÃN';
+   var tocHead3 = 'TAGS';
    var tocTool3 = '';
    if (sortBy == "titleasc") { 
       tocTool1 += ' (giảm dần)';
