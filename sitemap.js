@@ -1,1 +1,254 @@
-eval(((e,t,s,a,r)=>{if(a=function(e){return(e<62?"":a(parseInt(e/62)))+(35<(e%=62)?String.fromCharCode(e+29):e.toString(36))},!"".replace(/^/,String)){for(;t--;)r[a(t)]=s[t]||a(t);s=[function(e){return r[e]}],a=function(){return"\\w+"},t=1}for(;t--;)s[t]&&(e=e.replace(new RegExp("\\b"+a(t)+"\\b","g"),s[t]));return e})('f 11(t){f s(){k("F"K t.E){2 s=t.E.F.9;R=s,c=0;8(2 e=0;s>e;e++){8(2 a,o=t.E.F[e],r=o.O.$t,l=o.12.$t.L(0,10),p=0;p<o.j.9;p++)k("13"==o.j[p].M){a=o.j[p].z;y}8(2 i="",p=0;p<o.j.9;p++)k("14"==o.j[p].M){i=o.j[p].z;y}2 n="";k("C"K o)8(2 p=0;p<o.C.9;p++){n=o.C[p].V;2 m=n.X(";");-1!=m&&(n=n.L(0,m)),4[c]=n,3[c]=r,5[c]=l,7[c]=a,b[c]=i,10>e?6[c]=!0:6[c]=!1,c+=1}}}}s(),v="B",D(v),N(),T=!0,H(),d.g()}f D(t){f s(t,s){2 e=3[t];3[t]=3[s],3[s]=e;2 e=5[t];5[t]=5[s],5[s]=e;2 e=7[t];7[t]=7[s],7[s]=e;2 e=4[t];4[t]=4[s],4[s]=e;2 e=b[t];b[t]=b[s],b[s]=e;2 e=6[t];6[t]=6[s],6[s]=e}8(2 e=0;e<3.9-1;e++)8(2 a=e+1;a<3.9;a++)"B"==t&&3[e]>3[a]&&s(e,a),"15"==t&&3[e]<3[a]&&s(e,a),"19"==t&&5[e]>5[a]&&s(e,a),"18"==t&&5[e]<5[a]&&s(e,a),"J"==t&&4[e]>4[a]&&s(e,a)}f N(){v="J",D(v);8(2 t=0,s=0;s<3.9;){q=4[s],x=t;I t+=1;Q(4[t]==q);k(s=t,G(x,t),s>3.9)y}}f G(t,s){f e(t,s){2 e=3[t];3[t]=3[s],3[s]=e;2 e=5[t];5[t]=5[s],5[s]=e;2 e=7[t];7[t]=7[s],7[s]=e;2 e=4[t];4[t]=4[s],4[s]=e;2 e=b[t];b[t]=b[s],b[s]=e;2 e=6[t];6[t]=6[s],6[s]=e}8(2 a=t;s-1>a;a++)8(2 o=a+1;s>o;o++)3[a]>3[o]&&e(a,o)}f H(){8(2 t=0,s=0;s<3.9;){q=4[s],d.g("<p/>"),d.g(\'<w A="1b"><a z="/1a/1d/\'+q+\'">\'+q+"</a></w><P A=\'1c\'>"),x=t;I d.g("<S>"),d.g(\'<a z="\'+7[t]+\'" O="\'+3[t]+\'">\'+3[t]+"</a>"),1==6[t]&&d.g(\' - <w A="h">17!</w>\'),d.g("</S>"),t+=1;Q(4[t]==q);k(s=t,d.g("</P>"),G(x,t),s>3.9)y}}2 16="W",3=h u,7=h u,b=h u,5=h u,4=h u,6=h u,v="B",T=!1,U=Y,Z="",R=0;',76,"||var|postTitle|postLabels|postDate|postBaru|postUrl|for|length||postMp3|ii|document||function|write|new||link|if||||||brewvn_Labels||||Array|sortBy|span|firsti|break|href|class|titleasc|category|sortPosts|feed|entry|sortPosts2|displaybrewvn_Menuisi2|do|orderlabel|in|substring|rel|sortlabel|title|ol|while|numberfeed|li|brewvn_MenuisiLoaded|numChars|term|100|lastIndexOf|250|postFilter||brewvn_Load|published|alternate|enclosure|titledesc|periksa|New|datenewest|dateoldest|search|brewvn_Label|brewvn_Postname|label".split("|"),0,{}));
+// ---------------------------------------------------
+// Name: Sitemap for Blogger
+// Url: https://www.brewvn.com
+// ---------------------------------------------------
+
+// global arrays
+   var postTitle = new Array();     // array of posttitles
+   var postUrl = new Array();       // array of posturls
+   var postDate = new Array();      // array of post publish dates
+   var postSum = new Array();       // array of post summaries
+   var postLabels = new Array();    // array of post labels
+
+// global variables
+   var sortBy = "datenewest";         // default value for sorting ToC
+   var tocLoaded = false;           // true if feed is read and ToC can be displayed
+   var numChars = 250;              // number of characters in post summary
+   var postFilter = '';             // default filter value
+   var tocdiv = document.getElementById("bp_toc"); //the toc container
+   var totalEntires =0; //Entries grabbed till now
+   var totalPosts =0; //Total number of posts in the blog.
+
+// main callback function
+function loadtoc(json) {
+
+   function getPostData() {
+   // this functions reads all postdata from the json-feed and stores it in arrays
+      if ("entry" in json.feed) {
+         var numEntries = json.feed.entry.length;
+         totalEntires = totalEntires + numEntries;
+         totalPosts=json.feed.openSearch$totalResults.$t
+         if(totalPosts>totalEntires)
+         {
+         var nextjsoncall = document.createElement('script');
+         nextjsoncall.type = 'text/javascript';
+         startindex=totalEntires+1;
+         nextjsoncall.setAttribute("src", "/feeds/posts/summary?start-index=" + startindex + "&max-results=500&alt=json-in-script&callback=loadtoc");
+         tocdiv.appendChild(nextjsoncall);
+         }
+      // main loop gets all the entries from the feed
+         for (var i = 0; i < numEntries; i++) {
+         // get the entry from the feed
+            var entry = json.feed.entry[i];
+
+         // get the posttitle from the entry
+            var posttitle = entry.title.$t;
+
+         // get the post date from the entry
+            var postdate = entry.published.$t.substring(0,10);
+
+         // get the post url from the entry
+            var posturl;
+            for (var k = 0; k < entry.link.length; k++) {
+               if (entry.link[k].rel == 'alternate') {
+               posturl = entry.link[k].href;
+               break;
+               }
+            }
+
+         // get the post contents from the entry
+         // strip all html-characters, and reduce it to a summary
+            if ("content" in entry) {
+               var postcontent = entry.content.$t;}
+            else
+               if ("summary" in entry) {
+                  var postcontent = entry.summary.$t;}
+               else var postcontent = "";
+         // strip off all html-tags
+            var re = /<\S[^>]*>/g; 
+            postcontent = postcontent.replace(re, "");
+         // reduce postcontent to numchar characters, and then cut it off at the last whole word
+            if (postcontent.length > numChars) {
+               postcontent = postcontent.substring(0,numChars);
+               var quoteEnd = postcontent.lastIndexOf(" ");
+               postcontent = postcontent.substring(0,quoteEnd) + '...';
+            }
+
+         // get the post labels from the entry
+            var pll = '';
+            if ("category" in entry) {
+               for (var k = 0; k < entry.category.length; k++) {
+                  pll += '<a href="javascript:filterPosts(\'' + entry.category[k].term + '\');" title="Nhấp vào đây để chọn tất cả các bài đăng có nhãn \'' + entry.category[k].term + '\'">' + entry.category[k].term + '</a>,  ';
+               }
+            var l = pll.lastIndexOf(',');
+            if (l != -1) { pll = pll.substring(0,l); }
+            }
+
+         // add the post data to the arrays
+            postTitle.push(posttitle);
+            postDate.push(postdate);
+            postUrl.push(posturl);
+            postSum.push(postcontent);
+            postLabels.push(pll);
+         }
+      }
+      if(totalEntires==totalPosts) {tocLoaded=true;showToc();}
+   } // end of getPostData
+
+// start of showtoc function body
+// get the number of entries that are in the feed
+//   numEntries = json.feed.entry.length;
+
+// get the postdata from the feed
+   getPostData();
+
+// sort the arrays
+   sortPosts(sortBy);
+   tocLoaded = true;
+}
+
+// filter and sort functions
+
+function filterPosts(filter) {
+// This function changes the filter
+// and displays the filtered list of posts
+  // document.getElementById("bp_toc").scrollTop = document.getElementById("bp_toc").offsetTop;;
+   postFilter = filter;
+   displayToc(postFilter);
+} // end filterPosts
+
+function allPosts() {
+// This function resets the filter
+// and displays all posts
+
+   postFilter = '';
+   displayToc(postFilter);
+} // end allPosts
+
+function sortPosts(sortBy) {
+// This function is a simple bubble-sort routine
+// that sorts the posts
+
+   function swapPosts(x,y) {
+   // Swaps 2 ToC-entries by swapping all array-elements
+      var temp = postTitle[x];
+      postTitle[x] = postTitle[y];
+      postTitle[y] = temp;
+      var temp = postDate[x];
+      postDate[x] = postDate[y];
+      postDate[y] = temp;
+      var temp = postUrl[x];
+      postUrl[x] = postUrl[y];
+      postUrl[y] = temp;
+      var temp = postSum[x];
+      postSum[x] = postSum[y];
+      postSum[y] = temp;
+      var temp = postLabels[x];
+      postLabels[x] = postLabels[y];
+      postLabels[y] = temp;
+   } // end swapPosts
+
+   for (var i=0; i < postTitle.length-1; i++) {
+      for (var j=i+1; j<postTitle.length; j++) {
+         if (sortBy == "titleasc") { if (postTitle[i] > postTitle[j]) { swapPosts(i,j); } }
+         if (sortBy == "titledesc") { if (postTitle[i] < postTitle[j]) { swapPosts(i,j); } }
+         if (sortBy == "dateoldest") { if (postDate[i] > postDate[j]) { swapPosts(i,j); } }
+         if (sortBy == "datenewest") { if (postDate[i] < postDate[j]) { swapPosts(i,j); } }
+      }
+   }
+} // end sortPosts
+
+// displaying the toc
+
+function displayToc(filter) {
+// this function creates a three-column table and adds it to the screen
+   var numDisplayed = 0;
+   var tocTable = '';
+   var tocHead1 = 'BÀI VIẾT';
+   var tocTool1 = 'Nhấp để sắp xếp theo tiêu đề';
+   var tocHead2 = 'THỜI GIAN';
+   var tocTool2 = 'Nhấp để sắp xếp theo ngày';
+   var tocHead3 = 'NHÃN';
+   var tocTool3 = '';
+   if (sortBy == "titleasc") { 
+      tocTool1 += ' (giảm dần)';
+      tocTool2 += ' (mới nhất)';
+   }
+   if (sortBy == "titledesc") { 
+      tocTool1 += ' (tăng dần)';
+      tocTool2 += ' (mới nhất)';
+   }
+   if (sortBy == "dateoldest") { 
+      tocTool1 += ' (tăng dần)';
+      tocTool2 += ' (mới nhất)';
+   }
+   if (sortBy == "datenewest") { 
+      tocTool1 += ' (tăng dần)';
+      tocTool2 += ' (cũ nhất)';
+   }
+   if (postFilter != '') {
+      tocTool3 = 'Nhấp để hiển thị tất cả các bài viết';
+   }
+   tocTable += '<table>';
+   tocTable += '<tr>';
+   tocTable += '<td class="toc-header-col1" style="font-weight: bold;">';
+   tocTable += '<a href="javascript:toggleTitleSort();" title="' + tocTool1 + '">' + tocHead1 + '</a>';
+   tocTable += '</td>';
+   tocTable += '<td class="toc-header-col2" style="font-weight: bold;">';
+   tocTable += '<a href="javascript:toggleDateSort();" title="' + tocTool2 + '">' + tocHead2 + '</a>';
+   tocTable += '</td>';
+   tocTable += '<td class="toc-header-col3" style="font-weight: bold;">';
+   tocTable += '<a href="javascript:allPosts();" title="' + tocTool3 + '">' + tocHead3 + '</a>';
+   tocTable += '</td>';
+   tocTable += '</tr>';
+   for (var i = 0; i < postTitle.length; i++) {
+      if (filter == '') {
+         tocTable += '<tr><td class="toc-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="toc-entry-col2">' + postDate[i] + '</td><td class="toc-entry-col3">' + postLabels[i] + '</td></tr>';
+         numDisplayed++;
+      } else {
+          z = postLabels[i].lastIndexOf(filter);
+          if ( z!= -1) {
+             tocTable += '<tr><td class="toc-entry-col1"><a href="' + postUrl[i] + '" title="' + postSum[i] + '">' + postTitle[i] + '</a></td><td class="toc-entry-col2">' + postDate[i] + '</td><td class="toc-entry-col3">' + postLabels[i] + '</td></tr>';
+             numDisplayed++;
+          }
+        }
+   }
+   tocTable += '</table>';
+   if (numDisplayed == postTitle.length) {
+      var tocNote = '<span class="toc-note">Hiển thị tất cả ' + postTitle.length + ' bài viết<br/><br/></span>'; }
+   else {
+      var tocNote = '<span class="toc-note">Hiển thị ' + numDisplayed + ' bài viết có nhãn \'';
+      tocNote += postFilter + '\' trong tổng số '+ postTitle.length + ' bài viết<br/><br/></span>';
+   }
+   tocdiv.innerHTML = tocNote + tocTable;
+} // end of displayToc
+
+function toggleTitleSort() {
+   if (sortBy == "titleasc") { sortBy = "titledesc"; }
+   else { sortBy = "titleasc"; }
+   sortPosts(sortBy);
+   displayToc(postFilter);
+} // end toggleTitleSort
+
+function toggleDateSort() {
+   if (sortBy == "datenewest") { sortBy = "dateoldest"; }
+   else { sortBy = "datenewest"; }
+   sortPosts(sortBy);
+   displayToc(postFilter);
+} // end toggleTitleSort
+
+function showToc() {
+  if (tocLoaded) { 
+     displayToc(postFilter);
+     var toclink = document.getElementById("toclink");
+   
+  }
+  else { alert("Just wait... TOC is loading"); }
+}
+
+function hideToc() {
+  var tocdiv = document.getElementById("toc");
+  tocdiv.innerHTML = '';
+  var toclink = document.getElementById("toclink");
+  toclink.innerHTML = '<a href="#" onclick="scroll(0,0); showToc(); Effect.toggle('+"'toc-result','blind');"+'">» Hiển thị mục lục</a> <img src="https://3.bp.blogspot.com/-OJVzWx2-ubY/Wxga_uZJTTI/AAAAAAAALlY/O3SvsrILwRMUSam-7hqH1TxevLrWJr_GACLcBGAs/s1600/new_1.gif"/>';
+}
